@@ -17,9 +17,10 @@ def run_mitmproxy():
     # 获取capture.py的路径
     capture_script = os.path.join(os.path.dirname(__file__), "capture.py")
     
-    # 构建命令
+    # 构建命令，添加上游代理支持
     cmd = [
         sys.executable, "-m", "mitmproxy",
+        "--mode", "upstream:http://127.0.0.1:10808",
         "-s", capture_script,
         "-p", "8080"
     ]
@@ -46,13 +47,13 @@ def run_mitmweb():
     # 获取capture.py的路径
     capture_script = os.path.join(os.path.dirname(__file__), "capture.py")
     
-    # 构建命令，使用直接调用mitmweb可执行文件的方式
+    # 构建命令，使用直接调用mitmweb可执行文件的方式，添加上游代理支持
     cmd = [
         "mitmweb",
+        "--mode", "upstream:http://127.0.0.1:10808",
         "-s", capture_script,
         "-p", "8080",
-        "--web-port", "8081",
-        "--no-auth"
+        "--web-port", "8081"
     ]
     
     try:
